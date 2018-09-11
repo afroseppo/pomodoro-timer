@@ -1,0 +1,19 @@
+{
+  "name": "pomodoro-timer",
+  "version": "1.0.0",
+  "description": "A pomodoro-timer webapp.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/afroseppo/pomodoro-timer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/afroseppo/pomodoro-timer/issues"
+  },
+  "homepage": "https://github.com/afroseppo/pomodoro-timer#readme"
+}
