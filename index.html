@@ -5,10 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Pomodoro Timer</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <h1>A fly af pomodoro timer</h1>
+
+    <h2>Set the length of your sequence</h2>
+
+    <form name="timerInput">
+        <input type="number" name="hours" value="hh">
+        <input type="number" name="minutes" value="mm">
+        <input type="number" name="seconds" value="ss">
+        <br>
+        <button type="button" onclick="buttonClick()"></button>
+    </form>
+
+    <p class="clock" id="clock" align="center">Nothing yet</p>
     
 </body>
 </html>
