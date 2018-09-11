@@ -89,12 +89,35 @@ class Pomodoro {
             let timeLeftString;
             if(this.timeLeft() != false) {
                 this.timer.nextSecond();
-                timeLeftString = `${this.hours}:${this.minutes}:${this.seconds}`;
+
+                let hourString;
+                let minuteString;
+                let secondString;
+
+                if(this.hours < 10) {
+                    hourString = "0" + this.hours;
+                } else {
+                    hourString = this.hours;
+                }
+
+                if(this.minutes < 10 ) {
+                    minuteString = "0" + this.minutes;
+                } else {
+                    minuteString = this.minutes;
+                }
+
+                if(this.seconds < 10) {
+                    secondString = "0" + this.seconds;
+                } else {
+                    secondString = this.seconds;
+                }
+                timeLeftString = `${hourString}:${minuteString}:${secondString}`;
 
             } else {
                 clearInterval();
                 timeLeftString = "Time's up!";
             }
+
             updatePage(timeLeftString);
         }, 1000)
     }
@@ -109,8 +132,12 @@ const buttonClick = () => {
     minutes = document.forms[0].elements[1].value;
     seconds = document.forms[0].elements[2].value;
 
-    let pomodoro = new Pomodoro(hours, minutes, seconds);
-    pomodoro.refresh();
+    if (hours < 0 || hours > 23 || minutes < 0 || minutes < 59 || seconds < 0 || seconds > 59) {
+        alert("Incorrect input, please check the inputted time!")
+    } else {
+        let pomodoro = new Pomodoro(hours, minutes, seconds);
+        pomodoro.refresh();
+    }
 }
 
 const updatePage = (timeLeftString) => {
