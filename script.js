@@ -100,9 +100,19 @@ class Pomodoro {
     }
 }
 
-let pomodoro = new Pomodoro(0, 0, 10);
-pomodoro.refresh();
+const form = document.getElementsByTagName("form");
+
+// what to do when the submit button is clicked
+const buttonClick = () => {
+
+    const hours = document.forms[0].elements[0].value;
+    minutes = document.forms[0].elements[1].value;
+    seconds = document.forms[0].elements[2].value;
+
+    let pomodoro = new Pomodoro(hours, minutes, seconds);
+    pomodoro.refresh();
+}
 
 const updatePage = (timeLeftString) => {
     document.getElementById("clock").innerHTML = timeLeftString;
-}
+    }

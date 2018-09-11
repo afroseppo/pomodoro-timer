@@ -12,7 +12,17 @@
 
     <h1>A fly af pomodoro timer</h1>
 
-    <p id="clock"></p>
+    <h2>Set the length of your sequence</h2>
+
+    <form name="timerInput">
+        <input type="number" name="hours" value="hh">
+        <input type="number" name="minutes" value="mm">
+        <input type="number" name="seconds" value="ss">
+        <br>
+        <button type="button" onclick="buttonClick()"></button>
+    </form>
+
+    <p class="clock" id="clock" align="center">Nothing yet</p>
     
 </body>
 </html>
