@@ -1,3 +1,4 @@
-.clock {
+.clock, .cycleCounter {
     font-size: 50px;
+    text-align: center;
 }

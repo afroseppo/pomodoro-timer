@@ -63,6 +63,23 @@ class Pomodoro {
         this.timer = new Timer(hours, minutes, seconds);
         this.state = true;
         this.reset = false;
+        this.cycleHours = hours;
+        this.cycleMinutes = minutes;
+        this.cycleSeconds = seconds;
+    }
+
+    changeCycle() {
+        this.hours = this.cycleHours;
+        this.minutes = this.cycleMinutes;
+        this.seconds = this.cycleSeconds;
+    }
+
+    getState() {
+        return this.state;
+    }
+
+    getReset() {
+        return this.reset;
     }
 
     // the function calculates the time left in the cycle
@@ -123,6 +140,7 @@ class Pomodoro {
                 } else {
                     clearInterval();
                     timeLeftString = "Time's up!";
+                    this.changeCycle();
                 }
                 updatePage(timeLeftString);
             } else {
@@ -154,6 +172,7 @@ class Pomodoro {
 
 const form = document.getElementsByTagName("form");
 let pomodoro;
+let cycles = 0;
 
 // what to do when the submit button is clicked
 const buttonClick = () => {
@@ -168,7 +187,7 @@ const buttonClick = () => {
     } else {
         pomodoro = new Pomodoro(hours, minutes, seconds);
         pomodoro.refresh();
-        console.log("asdf");
+        //pomodoroCycles(hours, minutes, seconds);
     }
 }
 
@@ -188,4 +207,15 @@ const resetPomodoro = () => {
     }
     pomodoro = undefined;
     updatePage("Nothing yet");
+}
+
+const nextCycle = () => {
+    if(cycles != 0 && cycles % 4 == 0) {
+        document.getElementById("cycleCounter").innerHTML = "Time to take a longer break!"
+        return true;
+    } else {
+        document.getElementById("cycleCounter").innerHTML = "Cycles: " + cycles;
+        cycles++;
+        return false;
+    }
 }
