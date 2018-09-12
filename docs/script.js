@@ -61,6 +61,8 @@ class Pomodoro {
         this.minutes = minutes;
         this.seconds = seconds;
         this.timer = new Timer(hours, minutes, seconds);
+        this.state = true;
+        this.reset = false;
     }
 
     // the function calculates the time left in the cycle
@@ -83,36 +85,107 @@ class Pomodoro {
         console.log(this.hours + ":" + this.minutes + ":" + this.seconds);
     }
 
+    updateClock() {
+        let hourString;
+        let minuteString;
+        let secondString;
+
+        if(this.hours < 10) {
+            hourString = "0" + this.hours;
+        } else {
+            hourString = this.hours;
+        }
+
+        if(this.minutes < 10 ) {
+            minuteString = "0" + this.minutes;
+        } else {
+            minuteString = this.minutes;
+        }
+
+        if(this.seconds < 10) {
+            secondString = "0" + this.seconds;
+        } else {
+            secondString = this.seconds;
+        }
+        let timeLeftString = `${hourString}:${minuteString}:${secondString}`;
+
+        return timeLeftString;
+    }
+
     // the function refreshes the timer
     refresh() {
-        setInterval(() => {
-            let timeLeftString;
-            if(this.timeLeft() != false) {
-                this.timer.nextSecond();
-                timeLeftString = `${this.hours}:${this.minutes}:${this.seconds}`;
-
+        let refreshInterval = setInterval(() => {
+            if(this.state == true) {
+                let timeLeftString;
+                if(this.timeLeft() != false) {
+                    this.timer.nextSecond();
+                    timeLeftString = this.updateClock();
+                } else {
+                    clearInterval();
+                    timeLeftString = "Time's up!";
+                }
+                updatePage(timeLeftString);
             } else {
-                clearInterval();
-                timeLeftString = "Time's up!";
+                let timeLeftString = this.updateClock();
+                updatePage(timeLeftString);
             }
-            updatePage(timeLeftString);
+
+            if(this.reset) {
+                clearInterval(refreshInterval);
+            }
+
         }, 1000)
+    }
+
+    pauseTimer() {
+        if(this.state) {
+            this.state = false;
+        } else {
+            this.state = true;
+        }
+        console.log("pause");
+    }
+
+    setReset() {
+        console.log("123");
+        this.reset = true;
     }
 }
 
 const form = document.getElementsByTagName("form");
+let pomodoro;
 
 // what to do when the submit button is clicked
 const buttonClick = () => {
 
-    const hours = document.forms[0].elements[0].value;
-    minutes = document.forms[0].elements[1].value;
-    seconds = document.forms[0].elements[2].value;
+    let hours = (document.forms[0].elements[0].value.trim == "") ? 0 : document.forms[0].elements[0].value;
+    minutes = (document.forms[0].elements[1].value.trim == "") ? 0 : document.forms[0].elements[1].value;
+    seconds = (document.forms[0].elements[2].value.trim == "") ? 0 : document.forms[0].elements[2].value;
+    console.log("asdf");
 
-    let pomodoro = new Pomodoro(hours, minutes, seconds);
-    pomodoro.refresh();
+    if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59 || seconds < 0 || seconds > 59) {
+        alert("Incorrect input, please check the inputted time!")
+    } else {
+        pomodoro = new Pomodoro(hours, minutes, seconds);
+        pomodoro.refresh();
+        console.log("asdf");
+    }
 }
 
 const updatePage = (timeLeftString) => {
     document.getElementById("clock").innerHTML = timeLeftString;
+}
+
+const buttonClickStop = () => {
+    if(pomodoro != null || pomodoro != undefined) {
+        pomodoro.pauseTimer();
     }
+}
+
+const resetPomodoro = () => {
+    if (pomodoro != undefined || pomodoro != null) {
+        pomodoro.setReset();
+    }
+    pomodoro = undefined;
+    updatePage("Nothing yet");
+}
