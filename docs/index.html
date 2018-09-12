@@ -9,18 +9,21 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div align="center">
+        <h1>A fly af pomodoro timer</h1>
 
-    <h1>A fly af pomodoro timer</h1>
+        <h2>Set the length of your sequence</h2>
 
-    <h2>Set the length of your sequence</h2>
-
-    <form name="timerInput">
-        <input type="number" name="hours" value="0" placeholder="hh">
-        <input type="number" name="minutes" value="0" placeholder="mm">
-        <input type="number" name="seconds" value="0" placeholder="ss">
-        <br>
-        <button type="button" onclick="buttonClick()">Submit</button>
-    </form>
+        <form name="timerInput">
+            <input type="number" name="hours" placeholder="hours">
+            <input type="number" name="minutes" placeholder="minutes">
+            <input type="number" name="seconds" placeholder="seconds">
+            <br>
+            <br>
+            <button type="button" onclick="buttonClick()">Start</button>
+            <button type="button" onclick="resetPomodoro(), reset()">Reset</button>
+        </form>
+    </div>
 
     <div align="center">
         <p class="clock" id="clock">Nothing yet</p>

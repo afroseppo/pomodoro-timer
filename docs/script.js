@@ -62,6 +62,7 @@ class Pomodoro {
         this.seconds = seconds;
         this.timer = new Timer(hours, minutes, seconds);
         this.state = true;
+        this.reset = false;
     }
 
     // the function calculates the time left in the cycle
@@ -113,7 +114,7 @@ class Pomodoro {
 
     // the function refreshes the timer
     refresh() {
-        setInterval(() => {
+        let refreshInterval = setInterval(() => {
             if(this.state == true) {
                 let timeLeftString;
                 if(this.timeLeft() != false) {
@@ -128,6 +129,11 @@ class Pomodoro {
                 let timeLeftString = this.updateClock();
                 updatePage(timeLeftString);
             }
+
+            if(this.reset) {
+                clearInterval(refreshInterval);
+            }
+
         }, 1000)
     }
 
@@ -137,6 +143,12 @@ class Pomodoro {
         } else {
             this.state = true;
         }
+        console.log("pause");
+    }
+
+    setReset() {
+        console.log("123");
+        this.reset = true;
     }
 }
 
@@ -146,15 +158,17 @@ let pomodoro;
 // what to do when the submit button is clicked
 const buttonClick = () => {
 
-    const hours = document.forms[0].elements[0].value;
-    minutes = document.forms[0].elements[1].value;
-    seconds = document.forms[0].elements[2].value;
+    let hours = (document.forms[0].elements[0].value.trim == "") ? 0 : document.forms[0].elements[0].value;
+    minutes = (document.forms[0].elements[1].value.trim == "") ? 0 : document.forms[0].elements[1].value;
+    seconds = (document.forms[0].elements[2].value.trim == "") ? 0 : document.forms[0].elements[2].value;
+    console.log("asdf");
 
-    if (/*hours < 0 || hours > 23 || minutes < 0 || minutes < 59 || seconds < 0 || seconds < 59*/ false) {
+    if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59 || seconds < 0 || seconds > 59) {
         alert("Incorrect input, please check the inputted time!")
     } else {
         pomodoro = new Pomodoro(hours, minutes, seconds);
         pomodoro.refresh();
+        console.log("asdf");
     }
 }
 
@@ -163,5 +177,15 @@ const updatePage = (timeLeftString) => {
 }
 
 const buttonClickStop = () => {
-    pomodoro.pauseTimer();
+    if(pomodoro != null || pomodoro != undefined) {
+        pomodoro.pauseTimer();
+    }
+}
+
+const resetPomodoro = () => {
+    if (pomodoro != undefined || pomodoro != null) {
+        pomodoro.setReset();
+    }
+    pomodoro = undefined;
+    updatePage("Nothing yet");
 }
