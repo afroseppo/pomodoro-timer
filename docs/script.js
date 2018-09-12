@@ -24,11 +24,13 @@ class Timer {
     // a function that refreshes the timer approx every second
     // and rounds the time units to closest integer
     nextSecond() {
-            let interval = Date.now() - this.start;
+            let interval = Date.now() - this.start; // the difference between the current time and the start time of the timer
             let tempSeconds = interval / 1000;
             let tempMinutes = 0;
             let tempHours = 0;
-            if (tempSeconds > 60) {
+
+            // check whether the clock has reached to max seconds or minutes
+            if (tempSeconds > 59) {
                 if (tempMinutes == 59) {
                     tempHours++;
                     tempMinutes = 0;
@@ -38,11 +40,12 @@ class Timer {
                 tempSeconds = 0;
             }
 
-            //the time units are rounded to the closest integer
+            // the time units are rounded to the closest integer
             tempSeconds = Math.round(tempSeconds);
             tempMinutes = Math.round(tempMinutes);
             tempHours = Math.round(tempHours);
             
+            // the time variables get the values of the temp variables
             this.seconds = tempSeconds;
             this.minutes = tempMinutes;
             this.hours = tempHours;
@@ -61,13 +64,14 @@ class Pomodoro {
         this.minutes = minutes;
         this.seconds = seconds;
         this.timer = new Timer(hours, minutes, seconds);
-        this.state = true;
-        this.reset = false;
-        this.cycleHours = hours;
-        this.cycleMinutes = minutes;
-        this.cycleSeconds = seconds;
+        this.state = true; // a boolean to check if the pomodoro timer is on
+        this.reset = false; // a boolean to check whether the pomodoro is resetted
+        this.cycleHours = hours; // hours in one cycle
+        this.cycleMinutes = minutes; // minutes in one cycle
+        this.cycleSeconds = seconds; // seconds in one cycle
     }
 
+    // method that changes the cycle (initializes the time to cycle's initial values)
     changeCycle() {
         this.hours = this.cycleHours;
         this.minutes = this.cycleMinutes;
@@ -102,6 +106,9 @@ class Pomodoro {
         console.log(this.hours + ":" + this.minutes + ":" + this.seconds);
     }
 
+    /**
+     * @return a string that has the correct format for the the current time in the timer
+     */
     updateClock() {
         let hourString;
         let minuteString;
@@ -129,7 +136,10 @@ class Pomodoro {
         return timeLeftString;
     }
 
-    // the function refreshes the timer
+    /**
+     * the funciton refreshes the timer and has a setInterval to run the timer
+     * it also checks whether the timer should run, if it is stopped and whether there is still time left
+     */
     refresh() {
         let refreshInterval = setInterval(() => {
             if(this.state == true) {
@@ -155,6 +165,9 @@ class Pomodoro {
         }, 1000)
     }
 
+    /**
+     * the method pauses the timer by setting the state to false
+     */
     pauseTimer() {
         if(this.state) {
             this.state = false;
@@ -164,6 +177,10 @@ class Pomodoro {
         console.log("pause");
     }
 
+    /**
+     * sets the reset instance variable to true to reset the timer
+     * which will clear the setInterval i.e. stop it
+     */
     setReset() {
         console.log("123");
         this.reset = true;
