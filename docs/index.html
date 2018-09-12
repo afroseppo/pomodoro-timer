@@ -15,14 +15,17 @@
     <h2>Set the length of your sequence</h2>
 
     <form name="timerInput">
-        <input type="number" name="hours" value="hh">
-        <input type="number" name="minutes" value="mm">
-        <input type="number" name="seconds" value="ss">
+        <input type="number" name="hours" value="0" placeholder="hh">
+        <input type="number" name="minutes" value="0" placeholder="mm">
+        <input type="number" name="seconds" value="0" placeholder="ss">
         <br>
         <button type="button" onclick="buttonClick()">Submit</button>
     </form>
 
-    <p class="clock" id="clock" align="center">Nothing yet</p>
+    <div align="center">
+        <p class="clock" id="clock">Nothing yet</p>
+        <button type="button" onclick="buttonClickStop()">Stop</button>
+    </div>
     
 </body>
 </html>
